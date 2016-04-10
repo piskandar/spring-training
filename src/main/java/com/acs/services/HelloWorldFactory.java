@@ -9,6 +9,9 @@ public class HelloWorldFactory {
         HelloWorldService service = null;
 
         switch (language){
+            case "de":
+                service = new HelloWorldServiceGermanImpl();
+                break;
             case "fr":
                 service = new HelloWorldServiceFrenchImpl();
                 break;
