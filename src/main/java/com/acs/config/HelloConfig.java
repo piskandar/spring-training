@@ -1,8 +1,7 @@
 package com.acs.config;
 
+import com.acs.services.HelloWorldFactory;
 import com.acs.services.HelloWorldService;
-import com.acs.services.HelloWorldServiceEnglishImpl;
-import com.acs.services.HelloWorldServiceFrenchImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -10,15 +9,21 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class HelloConfig {
 
+
+    @Bean
+    public HelloWorldFactory helloWorldFactory(){
+        return new HelloWorldFactory();
+    }
+
     @Bean
     @Profile({"default","english"})
-    public HelloWorldService helloWorldServiceEnglish(){
-        return new HelloWorldServiceEnglishImpl();
+    public HelloWorldService helloWorldServiceEnglish(HelloWorldFactory helloWorldFactory){
+        return helloWorldFactory.createHelloWorldService("en");
     }
 
     @Bean
     @Profile("french")
     public HelloWorldService helloWorldServiceFrench(){
-        return new HelloWorldServiceFrenchImpl();
+        return helloWorldFactory().createHelloWorldService("fr");
     }
 }
